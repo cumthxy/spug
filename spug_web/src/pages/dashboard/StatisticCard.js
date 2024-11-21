@@ -29,7 +29,7 @@ export default class StatisticCard extends React.Component {
         <Col span={6}>
           <Card loading={loading}>
             <Statistic
-              title="应用"
+              title="任务数量"
               value={res.app}
               suffix={<span style={{fontSize: 16}}>个</span>}
               formatter={v => <a href="/deploy/app">{v}</a>}/>
@@ -38,7 +38,7 @@ export default class StatisticCard extends React.Component {
         <Col span={6}>
           <Card loading={loading}>
             <Statistic
-              title="主机"
+              title="wa队列长度"
               value={res.host}
               suffix={<span style={{fontSize: 16}}>台</span>}
               formatter={v => <a href="/host">{v}</a>}/>
@@ -47,7 +47,7 @@ export default class StatisticCard extends React.Component {
         <Col span={6}>
           <Card loading={loading}>
             <Statistic
-              title="任务"
+              title="运行中任务"
               value={res.task}
               suffix={<span style={{fontSize: 16}}>个</span>}
               formatter={v => <a href="/schedule">{v}</a>}/>

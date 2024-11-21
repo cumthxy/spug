@@ -55,9 +55,9 @@ export default [{
     ]
   }, {
     key: 'transfer',
-    label: '文件分发',
+    label: '测试结果下载',
     perms: [
-      {key: 'do', label: '文件分发'}
+      {key: 'do', label: '测试结果下载'}
     ]
   }]
 }, {

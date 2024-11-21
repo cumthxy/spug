@@ -32,8 +32,8 @@ class TemplateSelector extends React.Component {
 
   handleSubmit = () => {
     if (this.state.selectedRows.length > 0) {
-      const tpl = this.state.selectedRows[0]
-      this.props.onOk(tpl)
+      console.log("this.state.selectedRows",this.state.selectedRows)
+      this.props.onOk(this.state.selectedRows)
     }
     this.props.onCancel()
   };
@@ -43,14 +43,7 @@ class TemplateSelector extends React.Component {
       title: '名称',
       dataIndex: 'name',
       ellipsis: true
-    }, {
-      title: '类型',
-      dataIndex: 'type',
-    }, {
-      title: '目标主机',
-      dataIndex: 'host_ids',
-      render: v => `${v.length}台`
-    }, {
+    },{
       title: '内容',
       dataIndex: 'body',
       ellipsis: true
@@ -71,13 +64,6 @@ class TemplateSelector extends React.Component {
         onOk={this.handleSubmit}
         maskClosable={false}>
         <SearchForm>
-          <SearchForm.Item span={8} title="模板类别">
-            <Select allowClear placeholder="请选择" value={store.f_type} onChange={v => store.f_type = v}>
-              {store.types.map(item => (
-                <Select.Option value={item} key={item}>{item}</Select.Option>
-              ))}
-            </Select>
-          </SearchForm.Item>
           <SearchForm.Item span={8} title="模板名称">
             <Input allowClear value={store.f_name} onChange={e => store.f_name = e.target.value} placeholder="请输入"/>
           </SearchForm.Item>
@@ -88,8 +74,7 @@ class TemplateSelector extends React.Component {
         <Table
           rowKey="id"
           rowSelection={{
-            selectedRowKeys: selectedRows.map(item => item.id),
-            type: 'radio',
+            type: 'checkbox',
             onChange: (_, selectedRows) => this.setState({selectedRows})
           }}
           dataSource={store.dataSource}

@@ -25,11 +25,7 @@ class TemplateView(View):
         form, error = JsonParser(
             Argument('id', type=int, required=False),
             Argument('name', help='请输入模版名称'),
-            Argument('type', help='请选择模版类型'),
             Argument('body', help='请输入模版内容'),
-            Argument('interpreter', default='sh'),
-            Argument('host_ids', type=list, handler=json.dumps, default=[]),
-            Argument('parameters', type=list, handler=json.dumps, default=[]),
             Argument('desc', required=False)
         ).parse(request.body)
         if error is None:

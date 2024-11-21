@@ -29,10 +29,8 @@ export default observer(function () {
       footer={null}>
       <Steps current={store.page} className={styles.steps}>
         <Steps.Step key={0} title="创建任务"/>
-        <Steps.Step key={1} title="设置规则"/>
       </Steps>
       {store.page === 0 && <Step1/>}
-      {store.page === 1 && <Step2/>}
     </Modal>
   )
 })

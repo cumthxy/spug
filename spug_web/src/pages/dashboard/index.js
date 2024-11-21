@@ -14,8 +14,6 @@ class HomeIndex extends React.Component {
     return (
       <AuthDiv auth="dashboard.dashboard.view">
         <StatisticsCard/>
-        <AlarmTrend/>
-        <RequestTop/>
       </AuthDiv>
     )
   }

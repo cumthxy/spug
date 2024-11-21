@@ -53,9 +53,8 @@ class ComTable extends React.Component {
           showTotal: total => `共 ${total} 条`,
           pageSizeOptions: ['10', '20', '50', '100']
         }}>
-        <Table.Column title="模版名称" dataIndex="name"/>
-        <Table.Column title="模版类型" dataIndex="type"/>
-        <Table.Column ellipsis title="模版内容" dataIndex="body"/>
+        <Table.Column title="接口名称" dataIndex="name"/>
+        <Table.Column ellipsis title="接口内容" dataIndex="body"/>
         <Table.Column ellipsis title="描述信息" dataIndex="desc"/>
         {hasPermission('exec.template.edit|exec.template.del') && (
           <Table.Column title="操作" render={info => (

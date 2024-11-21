@@ -51,24 +51,22 @@ export default [
     path: '/dashboard',
     component: DashboardIndex
   },
-  {icon: <CloudServerOutlined/>, title: '主机管理', auth: 'host.host.view', path: '/host', component: HostIndex},
   {
-    icon: <CodeOutlined/>, title: '批量执行', auth: 'exec.task.do|exec.template.view', child: [
-      {title: '执行任务', auth: 'exec.task.do', path: '/exec/task', component: ExecTask},
+    icon: <CodeOutlined/>, title: '测试配置', auth: 'exec.task.do|exec.template.view', child: [
       {title: '模板管理', auth: 'exec.template.view', path: '/exec/template', component: ExecTemplate},
-      {title: '文件分发', auth: 'exec.transfer.do', path: '/exec/transfer', component: ExecTransfer},
+      {title: '测试结果下载', auth: 'exec.transfer.do', path: '/exec/transfer', component: ExecTransfer},
     ]
   },
-  {
-    icon: <FlagOutlined/>, title: '应用发布', auth: 'deploy.app.view|deploy.repository.view|deploy.request.view', child: [
-      {title: '发布配置', auth: 'deploy.app.view', path: '/deploy/app', component: DeployApp},
-      {title: '构建仓库', auth: 'deploy.repository.view', path: '/deploy/repository', component: DeployRepository},
-      {title: '发布申请', auth: 'deploy.request.view', path: '/deploy/request', component: DeployRequest},
-    ]
-  },
+  // {
+  //   icon: <FlagOutlined/>, title: '应用发布', auth: 'deploy.app.view|deploy.repository.view|deploy.request.view', child: [
+  //     {title: '发布配置', auth: 'deploy.app.view', path: '/deploy/app', component: DeployApp},
+  //     {title: '构建仓库', auth: 'deploy.repository.view', path: '/deploy/repository', component: DeployRepository},
+  //     {title: '发布申请', auth: 'deploy.request.view', path: '/deploy/request', component: DeployRequest},
+  //   ]
+  // },
   {
     icon: <ScheduleOutlined/>,
-    title: '任务计划',
+    title: '测试任务',
     auth: 'schedule.schedule.view',
     path: '/schedule',
     component: ScheduleIndex
@@ -81,14 +79,14 @@ export default [
       {path: '/config/setting/:type/:id', component: ConfigSetting},
     ]
   },
-  {icon: <MonitorOutlined/>, title: '监控中心', auth: 'monitor.monitor.view', path: '/monitor', component: MonitorIndex},
-  {
-    icon: <AlertOutlined/>, title: '报警中心', auth: 'alarm.alarm.view|alarm.contact.view|alarm.group.view', child: [
-      {title: '报警历史', auth: 'alarm.alarm.view', path: '/alarm/alarm', component: AlarmIndex},
-      {title: '报警联系人', auth: 'alarm.contact.view', path: '/alarm/contact', component: AlarmContact},
-      {title: '报警联系组', auth: 'alarm.group.view', path: '/alarm/group', component: AlarmGroup},
-    ]
-  },
+  // {icon: <MonitorOutlined/>, title: '监控中心', auth: 'monitor.monitor.view', path: '/monitor', component: MonitorIndex},
+  // {
+  //   icon: <AlertOutlined/>, title: '报警中心', auth: 'alarm.alarm.view|alarm.contact.view|alarm.group.view', child: [
+  //     {title: '报警历史', auth: 'alarm.alarm.view', path: '/alarm/alarm', component: AlarmIndex},
+  //     {title: '报警联系人', auth: 'alarm.contact.view', path: '/alarm/contact', component: AlarmContact},
+  //     {title: '报警联系组', auth: 'alarm.group.view', path: '/alarm/group', component: AlarmGroup},
+  //   ]
+  // },
   {
     icon: <SettingOutlined/>, title: '系统管理', auth: "system.account.view|system.role.view|system.setting.view", child: [
       {title: '登录日志', auth: 'system.login.view', path: '/system/login', component: SystemLogin},

@@ -112,8 +112,8 @@ function TransferIndex() {
   return (<AuthDiv auth="exec.transfer.do">
     <Breadcrumb>
       <Breadcrumb.Item>首页</Breadcrumb.Item>
-      <Breadcrumb.Item>批量执行</Breadcrumb.Item>
-      <Breadcrumb.Item>文件分发</Breadcrumb.Item>
+      <Breadcrumb.Item>测试配置</Breadcrumb.Item>
+      <Breadcrumb.Item>测试结果下载</Breadcrumb.Item>
     </Breadcrumb>
     <div className={style.index} hidden={token}>
       <div className={style.left}>
