@@ -41,6 +41,7 @@ import SystemSetting from './pages/system/setting';
 import SystemLogin from './pages/system/login';
 import WelcomeIndex from './pages/welcome/index';
 import WelcomeInfo from './pages/welcome/info';
+import Md5test from "./pages/md5test"
 
 export default [
   {icon: <DesktopOutlined/>, title: '工作台', path: '/home', component: HomeIndex},
@@ -94,6 +95,12 @@ export default [
       {title: '角色管理', auth: 'system.role.view', path: '/system/role', component: SystemRole},
       {title: '系统设置', auth: 'system.setting.view', path: '/system/setting', component: SystemSetting},
     ]
+  },
+  {
+    icon: <FlagOutlined/>,
+    title: 'MD5测试页面',
+    path: '/md5',
+    component:Md5test
   },
   {path: '/welcome/index', component: WelcomeIndex},
   {path: '/welcome/info', component: WelcomeInfo},

@@ -49,6 +49,8 @@ class Store {
           return null
         });
         this.records = res.tasks;
+        console.log(this.records);
+        
         this.types = res.types
       })
       .finally(() => this.isFetching = false)

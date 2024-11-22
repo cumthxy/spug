@@ -10,7 +10,7 @@ import { Modal, Tag, Dropdown, Menu, Radio, message } from 'antd';
 import { LinkButton, Action, TableCard, AuthButton } from 'components';
 import { http } from 'libs';
 import store from './store';
-
+import axios from 'axios';
 @observer
 class ComTable extends React.Component {
   componentDidMount() {
@@ -21,6 +21,13 @@ class ComTable extends React.Component {
 
   moreMenus = (info) => (
     <Menu>
+      {info.filename ? ( // 检查 info.filename 是否存在
+        <Menu.Item>
+          <LinkButton auth="schedule.schedule.edit" onClick={() => this.downloadfile(info)}>
+            下载文件
+          </LinkButton>
+        </Menu.Item>
+      ) : null}
       <Menu.Item>
         <LinkButton auth="schedule.schedule.edit" onClick={() => this.handleTest(info)}>执行测试</LinkButton>
       </Menu.Item>
@@ -33,7 +40,7 @@ class ComTable extends React.Component {
       <Menu.Item>
         <LinkButton onClick={() => store.showRecord(info)}>历史记录</LinkButton>
       </Menu.Item>
-      <Menu.Divider/>
+      <Menu.Divider />
       <Menu.Item>
         <LinkButton danger auth="schedule.schedule.del" onClick={() => this.handleDelete(info)}>删除</LinkButton>
       </Menu.Item>
@@ -49,6 +56,8 @@ class ComTable extends React.Component {
   }, {
     title: '最新状态',
     render: info => {
+      console.log(info);
+
       if (info.is_active) {
         if (info['latest_status_alias']) {
           return <Tag color={this.colors[info['latest_status']]}>{info['latest_status_alias']}</Tag>
@@ -73,11 +82,11 @@ class ComTable extends React.Component {
     render: info => (
       <Action>
         <Action.Button disabled={info['latest_run_time'] === '1970-01-01'}
-                       onClick={() => store.showInfo(info)}>详情</Action.Button>
+          onClick={() => store.showInfo(info)}>详情</Action.Button>
         <Action.Button auth="schedule.schedule.edit" onClick={() => store.showForm(info)}>编辑</Action.Button>
         <Dropdown overlay={() => this.moreMenus(info)} trigger={['click']}>
           <LinkButton>
-            更多 <DownOutlined/>
+            更多 <DownOutlined />
           </LinkButton>
         </Dropdown>
       </Action>
@@ -89,7 +98,7 @@ class ComTable extends React.Component {
       title: '操作确认',
       content: `确定要${text.is_active ? '禁用' : '激活'}任务【${text['name']}】?`,
       onOk: () => {
-        return http.patch('/api/schedule/', {id: text.id, is_active: !text.is_active})
+        return http.patch('/api/schedule/', { id: text.id, is_active: !text.is_active })
           .then(() => {
             message.success('操作成功');
             store.fetchRecords()
@@ -103,7 +112,7 @@ class ComTable extends React.Component {
       title: '删除确认',
       content: `确定要删除【${text['name']}】?`,
       onOk: () => {
-        return http.delete('/api/schedule/', {params: {id: text.id}})
+        return http.delete('/api/schedule/', { params: { id: text.id } })
           .then(() => {
             message.success('删除成功');
             store.fetchRecords()
@@ -116,11 +125,21 @@ class ComTable extends React.Component {
     Modal.confirm({
       title: '操作确认',
       content: '立即以串行模式执行该任务（不影响调度规则，且不会触发失败通知，测试执行会有120秒的超时，真实调度执行无此限制）？',
-      onOk: () => http.post(`/api/schedule/${text.id}/`, null, {timeout: 120000})
+      onOk: () => http.post(`/api/schedule/${text.id}/`, null, { timeout: 120000 })
         .then(res => store.showInfo(text, res))
     })
   };
-
+  downloadfile = (info) => {
+    
+        // 创建下载链接
+        const link = document.createElement('a');
+        link.href = info.filename
+        link.target = '_blank'; // 如果需要在新标签页打开，可以设置 target
+        link.setAttribute('download', info.filename || 'downloaded_file'); // 设置文件名（可选）
+        document.body.appendChild(link);
+        link.click(); // 模拟点击触发下载
+        document.body.removeChild(link); // 移除 DOM 节点
+  }
   render() {
     return (
       <TableCard
@@ -134,7 +153,7 @@ class ComTable extends React.Component {
           <AuthButton
             auth="schedule.schedule.add"
             type="primary"
-            icon={<PlusOutlined/>}
+            icon={<PlusOutlined />}
             onClick={() => store.showForm()}>新建</AuthButton>,
           <Radio.Group value={store.f_active} onChange={e => store.f_active = e.target.value}>
             <Radio.Button value="">全部</Radio.Button>
@@ -148,7 +167,7 @@ class ComTable extends React.Component {
           showTotal: total => `共 ${total} 条`,
           pageSizeOptions: ['10', '20', '50', '100']
         }}
-        columns={this.columns}/>
+        columns={this.columns} />
     )
   }
 }

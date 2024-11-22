@@ -14,7 +14,6 @@ import store from '../template/store';
 class TemplateSelector extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       selectedRows: [],
     }
@@ -24,15 +23,26 @@ class TemplateSelector extends React.Component {
     if (store.records.length === 0) {
       store.fetchRecords()
     }
+    // 从 this.props.data 中提取你需要的内容
+    const data = this.props.data;
+    const matchDataList = data.split('\n').filter(item => item.trim() !== '');
+    // 找到与 matchData 匹配的记录
+    console.log(matchDataList);
+    const selectedRecords = store.records.filter(record =>
+      matchDataList.some(matchData => record.body.includes(matchData))
+    );
+    console.log("Selected Records: ", selectedRecords);
+    this.setState({ selectedRows: selectedRecords });
+
   }
 
   handleClick = (record) => {
-    this.setState({selectedRows: [record]});
+    this.setState({ selectedRows: [record] });
   };
 
   handleSubmit = () => {
     if (this.state.selectedRows.length > 0) {
-      console.log("this.state.selectedRows",this.state.selectedRows)
+      console.log("this.state.selectedRows", this.state.selectedRows)
       this.props.onOk(this.state.selectedRows)
     }
     this.props.onCancel()
@@ -43,7 +53,7 @@ class TemplateSelector extends React.Component {
       title: '名称',
       dataIndex: 'name',
       ellipsis: true
-    },{
+    }, {
       title: '内容',
       dataIndex: 'body',
       ellipsis: true
@@ -54,7 +64,7 @@ class TemplateSelector extends React.Component {
     }];
 
   render() {
-    const {selectedRows} = this.state;
+    const { selectedRows } = this.state;
     return (
       <Modal
         visible
@@ -65,17 +75,18 @@ class TemplateSelector extends React.Component {
         maskClosable={false}>
         <SearchForm>
           <SearchForm.Item span={8} title="模板名称">
-            <Input allowClear value={store.f_name} onChange={e => store.f_name = e.target.value} placeholder="请输入"/>
+            <Input allowClear value={store.f_name} onChange={e => store.f_name = e.target.value} placeholder="请输入" />
           </SearchForm.Item>
           <SearchForm.Item span={8}>
-            <Button type="primary" icon={<SyncOutlined/>} onClick={store.fetchRecords}>刷新</Button>
+            <Button type="primary" icon={<SyncOutlined />} onClick={store.fetchRecords}>刷新</Button>
           </SearchForm.Item>
         </SearchForm>
         <Table
           rowKey="id"
           rowSelection={{
             type: 'checkbox',
-            onChange: (_, selectedRows) => this.setState({selectedRows})
+            selectedRowKeys: this.state.selectedRows.map(record => record.id),
+            onChange: (_, selectedRows) => this.setState({ selectedRows })
           }}
           dataSource={store.dataSource}
           loading={store.isFetching}
@@ -84,7 +95,7 @@ class TemplateSelector extends React.Component {
               onClick: () => this.handleClick(record)
             }
           }}
-          columns={this.columns}/>
+          columns={this.columns} />
       </Modal>
     )
   }

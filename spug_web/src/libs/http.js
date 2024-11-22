@@ -14,11 +14,13 @@ function handleResponse(response) {
   if (response.status === 401) {
     result = '会话过期，请重新登录';
     if (history.location.pathname !== '/') {
-      history.push('/', {from: history.location})
+      history.push('/', { from: history.location })
     } else {
       return Promise.reject()
     }
   } else if (response.status === 200) {
+    console.log(response);
+
     if (response.data.error) {
       result = response.data.error
     } else if (response.data.hasOwnProperty('data')) {
@@ -28,7 +30,7 @@ function handleResponse(response) {
     } else if (!response.config.isInternal) {
       return Promise.resolve(response.data)
     } else {
-      result = '无效的数据格式'
+      return Promise.resolve(response)
     }
   } else {
     result = `请求失败: ${response.status} ${response.statusText}`
